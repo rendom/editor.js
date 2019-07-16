@@ -41,6 +41,7 @@ export default class LinkInlineTool implements InlineTool {
    */
   private readonly commandLink: string = 'createLink';
   private readonly commandUnlink: string = 'unlink';
+  private readonly markerClass: string = 'a-link';
 
   /**
    * Enter key code
@@ -152,7 +153,7 @@ export default class LinkInlineTool implements InlineTool {
         this.selection.restore();
         this.selection.removeFakeBackground();
       }
-      const parentAnchor = this.selection.findParentTag('A');
+      const parentAnchor = this.selection.findParentTag('A', this.markerClass);
 
       /**
        * Unlink icon pressed
@@ -175,7 +176,7 @@ export default class LinkInlineTool implements InlineTool {
    * @param {Selection} selection
    */
   public checkState(selection?: Selection): boolean {
-    const anchorTag = this.selection.findParentTag('A');
+    const anchorTag = this.selection.findParentTag('A', this.markerClass);
 
     if (anchorTag) {
       this.nodes.button.classList.add(this.CSS.buttonUnlink);
@@ -360,13 +361,14 @@ export default class LinkInlineTool implements InlineTool {
     /**
      * Edit all link, not selected part
      */
-    const anchorTag = this.selection.findParentTag('A');
+    const anchorTag = this.selection.findParentTag('A', this.markerClass);
 
     if (anchorTag) {
       this.selection.expandToTag(anchorTag);
     }
 
     document.execCommand(this.commandLink, false, link);
+    const marker = this.selection.findParentTag('A').classList.add(this.markerClass);
   }
 
   /**
