@@ -27,7 +27,8 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      'editor': ['@babel/polyfill/noConflict', './src/codex.ts']
+      'editor': ['@babel/polyfill/noConflict', './src/codex.ts'],
+      'linkInlineTool': ['@babel/polyfill/noConflict', './src/components/inline-tools/inline-tool-link.ts'],
     },
 
     output: {
